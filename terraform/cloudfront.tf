@@ -11,7 +11,7 @@ resource "aws_cloudfront_distribution" "website" {
   dynamic "origin" {
     for_each = length(data.terraform_remote_state.api_rest.outputs) > 0 ? [1] : []
     content {
-      domain_name = replace(data.terraform_remote_state.api_rest.outputs.api_gateway_url, "https://", "")
+      domain_name = split("/", replace(data.terraform_remote_state.api_rest.outputs.api_gateway_url, "https://", ""))[0]
       origin_id   = "API-${var.project_name}"
       origin_path = "/${var.environment}"
 

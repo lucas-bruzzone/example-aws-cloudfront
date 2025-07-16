@@ -1,6 +1,5 @@
 terraform {
   backend "s3" {
-    # Substitua pelos outputs do bootstrap
     bucket         = "example-aws-terraform-terraform-state"
     key            = "example-aws-cloudfront/terraform.tfstate"
     region         = "us-east-1"
@@ -20,6 +19,21 @@ terraform {
 
 provider "aws" {
   region = var.aws_region
+
+  default_tags {
+    tags = {
+      Environment = var.environment
+      Project     = var.project_name
+      ManagedBy   = "terraform"
+      Repository  = "example-aws-cloudfront"
+    }
+  }
+}
+
+# Provider específico para us-east-1 (certificados ACM)
+provider "aws" {
+  alias  = "us_east_1"
+  region = "us-east-1"
 
   default_tags {
     tags = {

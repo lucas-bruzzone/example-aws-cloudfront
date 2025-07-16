@@ -3,4 +3,4 @@ environment  = "devops"
 project_name = "example-aws-cloudfront"
 
 # Opcional: configurar domínio próprio
-# domain_name = "seudominio.com"
+domain_name = ""
